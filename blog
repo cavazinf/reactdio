@@ -1,0 +1,105 @@
+Passo 1: Configurar um projeto Next.js
+
+Certifique-se de ter o Node.js instalado e execute os seguintes comandos no terminal:
+
+bash
+Copy code
+npx create-next-app blog-pessoal
+cd blog-pessoal
+Passo 2: Criar as páginas
+
+Dentro do seu projeto Next.js, crie uma pasta chamada pages. Cada arquivo dentro dessa pasta representa uma rota na sua aplicação.
+
+Crie um arquivo index.js dentro da pasta pages com o seguinte conteúdo inicial:
+
+javascript
+Copy code
+// pages/index.js
+import Head from 'next/head';
+
+export default function Home() {
+  return (
+    <div>
+      <Head>
+        <title>Meu Blog Pessoal</title>
+      </Head>
+      <h1>Bem-vindo ao Meu Blog Pessoal</h1>
+      {/* Conteúdo do blog */}
+    </div>
+  );
+}
+Passo 3: Adicionar páginas adicionais
+
+Por exemplo, você pode criar uma página para exibir posts do blog. Crie um arquivo chamado posts.js dentro da pasta pages:
+
+javascript
+Copy code
+// pages/posts.js
+import Head from 'next/head';
+
+export default function Posts() {
+  return (
+    <div>
+      <Head>
+        <title>Posts - Meu Blog Pessoal</title>
+      </Head>
+      <h1>Posts do Blog</h1>
+      {/* Listagem de posts */}
+    </div>
+  );
+}
+Passo 4: Criar os componentes
+
+Crie um diretório chamado components para armazenar os componentes reutilizáveis. Por exemplo, você pode criar um componente PostCard.js para representar um card de post:
+
+javascript
+Copy code
+// components/PostCard.js
+export default function PostCard({ title, content }) {
+  return (
+    <div>
+      <h2>{title}</h2>
+      <p>{content}</p>
+    </div>
+  );
+}
+Passo 5: Estilizar sua aplicação
+
+Você pode criar estilos para sua aplicação utilizando CSS puro, ou frameworks como Tailwind CSS ou Styled Components.
+
+Passo 6: Adicionar conteúdo dinâmico
+
+Para adicionar conteúdo dinâmico aos seus posts, você pode considerar a integração com um CMS (Sistema de Gerenciamento de Conteúdo) como Contentful, Strapi ou até mesmo criar um arquivo posts.json com informações fictícias para simular o conteúdo dos posts.
+
+Você pode utilizar rotas dinâmicas para criar páginas para cada post individualmente:
+
+javascript
+Copy code
+// pages/posts/[slug].js
+import { useRouter } from 'next/router';
+import Head from 'next/head';
+
+export default function Post() {
+  const router = useRouter();
+  const { slug } = router.query;
+
+  // Lógica para buscar o conteúdo do post com base no slug
+
+  return (
+    <div>
+      <Head>
+        <title>{slug} - Meu Blog Pessoal</title>
+      </Head>
+      <h1>{slug}</h1>
+      {/* Conteúdo do post */}
+    </div>
+  );
+}
+Passo 7: Executar o aplicativo
+
+No terminal, dentro do diretório do projeto, execute:
+
+bash
+Copy code
+npm run dev
+Isso iniciará o servidor de desenvolvimento do Next.js. Abra o navegador e acesse http://localhost:3000 para ver o seu blog pessoal.
