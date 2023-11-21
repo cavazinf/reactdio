@@ -1,0 +1,149 @@
+Passo 1: Criar um novo aplicativo React
+Abra o terminal e execute o seguinte comando para criar um novo aplicativo React:
+
+bash
+Copy code
+npx create-react-app calculadora-react
+cd calculadora-react
+Passo 2: Estrutura do projeto
+Acesse o diretório do projeto e abra o código no seu editor de código preferido. Você verá diversos arquivos, mas os principais são App.js e index.js.
+
+Passo 3: Criar o componente da calculadora
+Abra o arquivo App.js e substitua o conteúdo por:
+
+javascript
+Copy code
+import React, { useState } from 'react';
+import './App.css';
+
+function App() {
+  const [displayValue, setDisplayValue] = useState('0');
+  const [firstValue, setFirstValue] = useState('');
+  const [operator, setOperator] = useState('');
+  const [waitingForSecondValue, setWaitingForSecondValue] = useState(false);
+
+  const inputDigit = (digit) => {
+    if (waitingForSecondValue) {
+      setDisplayValue(digit);
+      setWaitingForSecondValue(false);
+    } else {
+      setDisplayValue(displayValue === '0' ? digit : displayValue + digit);
+    }
+  };
+
+  const inputDecimal = () => {
+    if (!displayValue.includes('.')) {
+      setDisplayValue(displayValue + '.');
+      setWaitingForSecondValue(false);
+    }
+  };
+
+  const performOperation = (nextOperator) => {
+    const inputValue = parseFloat(displayValue);
+
+    if (firstValue === '') {
+      setFirstValue(inputValue);
+    } else if (operator) {
+      const result = calculate(firstValue, inputValue, operator);
+      setDisplayValue(`${parseFloat(result.toFixed(7))}`);
+      setFirstValue(result);
+    }
+
+    setWaitingForSecondValue(true);
+    setOperator(nextOperator);
+  };
+
+  const calculate = (firstValue, secondValue, operator) => {
+    switch (operator) {
+      case '+':
+        return firstValue + secondValue;
+      case '-':
+        return firstValue - secondValue;
+      case '*':
+        return firstValue * secondValue;
+      case '/':
+        return firstValue / secondValue;
+      default:
+        return secondValue;
+    }
+  };
+
+  const clearDisplay = () => {
+    setDisplayValue('0');
+    setFirstValue('');
+    setOperator('');
+    setWaitingForSecondValue(false);
+  };
+
+  return (
+    <div className="calculator">
+      <div className="display">{displayValue}</div>
+      <div className="buttons">
+        <button onClick={() => inputDigit('7')}>7</button>
+        <button onClick={() => inputDigit('8')}>8</button>
+        <button onClick={() => inputDigit('9')}>9</button>
+        <button onClick={() => performOperation('/')}>/</button>
+        <button onClick={() => inputDigit('4')}>4</button>
+        <button onClick={() => inputDigit('5')}>5</button>
+        <button onClick={() => inputDigit('6')}>6</button>
+        <button onClick={() => performOperation('*')}>*</button>
+        <button onClick={() => inputDigit('1')}>1</button>
+        <button onClick={() => inputDigit('2')}>2</button>
+        <button onClick={() => inputDigit('3')}>3</button>
+        <button onClick={() => performOperation('-')}>-</button>
+        <button onClick={() => inputDigit('0')}>0</button>
+        <button onClick={() => inputDecimal()}>.</button>
+        <button onClick={() => performOperation('=')}>=</button>
+        <button onClick={() => performOperation('+')}>+</button>
+      </div>
+      <button className="clear" onClick={() => clearDisplay()}>Clear</button>
+    </div>
+  );
+}
+
+export default App;
+Passo 4: Estilizar a calculadora
+Crie um arquivo App.css no mesmo diretório onde está o App.js e adicione estilos para a calculadora. Aqui está um exemplo simples:
+
+css
+Copy code
+.calculator {
+  width: 250px;
+  margin: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.display {
+  font-size: 24px;
+  text-align: right;
+  margin-bottom: 10px;
+  padding: 5px;
+  background-color: #f3f3f3;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 5px;
+}
+
+button {
+  font-size: 18px;
+  padding: 10px;
+  cursor: pointer;
+  border: none;
+  background-color: #eee;
+}
+
+.clear {
+  width: 100%;
+  margin-top: 5px;
+}
+Passo 5: Executar a aplicação
+No terminal, dentro do diretório do projeto, execute:
+
+bash
+Copy code
+npm start
+Isso iniciará o servidor de desenvolvimento React. Abra o navegador e acesse http://localhost:3000 para ver a calculadora em funcionamento.
